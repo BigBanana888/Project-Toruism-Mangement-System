@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.TActMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.api.pojo.TAct">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="address" property="address" />
+        <result column="bq" property="bq" />
+        <result column="js" property="js" />
+        <result column="sex" property="sex" />
+        <result column="stime" property="stime" />
+        <result column="created_time" property="createdTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="created_id" property="createdId" />
+        <result column="modified_id" property="modifiedId" />
+        <result column="ss" property="ss" />
+        <result column="rep" property="rep" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, address, bq, js, sex, stime, created_time, modified_time, created_id, modified_id, ss, rep
+    </sql>
+
+</mapper>

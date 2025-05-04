@@ -1,0 +1,39 @@
+# mysql 5 驱动不同 com.mysql.jdbc.Driver
+# mysql 8 驱动不同com.mysql.cj.jdbc.Driver、需要增加时区的配置 serverTimezone=GMT%2B8
+spring:
+  servlet:
+    multipart:
+      enabled: true # 开启文件上传
+      file-size-threshold: 2KB # 文件写入磁盘的阈值
+      max-file-size: 100MB
+      max-request-size: 215MB # 最大请求值大小
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/lvyou?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  web:
+    resources:
+      static-locations:
+        - classpath:/META-INF/resources/
+              - classpath:/resources/
+              - classpath:/static/
+              - classpath:/public/
+              - file:resources/files/ # 确保这个路径是存在的，并且应用有权限访问
+# 配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    global-config:
+      db-config:
+        logic-delete-value: 1
+        logic-not-delete-value: 0
+  mapper-locations: classpath:mappers/*.xml
+server:
+  port: 9001
+file:
+  path: \src\main\resources\files\
+  url: http://localhost:9001/file/show/

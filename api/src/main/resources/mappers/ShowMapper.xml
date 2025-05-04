@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.ShowMapper">
+
+    <select id="selectActLocationHeat" resultType="com.api.pojo.NameNum">
+        SELECT
+        address AS name,
+        COUNT(*) AS value
+        FROM t_act
+        WHERE ss = 'approve'
+        GROUP BY address
+        ORDER BY value DESC
+        LIMIT 5
+    </select>
+
+    <select id="selectBudgetDistribution" resultType="com.api.pojo.NameNum">
+SELECT
+    CASE
+        WHEN ys BETWEEN 0 AND 500 THEN '0-500'
+        WHEN ys BETWEEN 501 AND 1000 THEN '501-1000'
+        WHEN ys BETWEEN 1001 AND 1500 THEN '1001-1500'
+        WHEN ys BETWEEN 1501 AND 2000 THEN '1501-2000'
+        ELSE 'Over 2000'
+        END AS name,
+    COUNT(*) AS value
+FROM t_act
+WHERE ss = 'approve'
+GROUP BY
+    CASE
+        WHEN ys BETWEEN 0 AND 500 THEN '0-500'
+        WHEN ys BETWEEN 501 AND 1000 THEN '501-1000'
+        WHEN ys BETWEEN 1001 AND 1500 THEN '1001-1500'
+        WHEN ys BETWEEN 1501 AND 2000 THEN '1501-2000'
+        ELSE 'Over 2000'
+        END
+ORDER BY MIN(ys);
+    </select>
+
+    <select id="selectRecentSubscriptions" resultType="com.api.pojo.NameNum">
+SELECT
+    DATE_FORMAT(created_time, '%Y-%m-%d') AS name,
+    COUNT(*) AS value
+FROM t_sub
+WHERE created_time BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+          AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+GROUP BY name
+ORDER BY MIN(created_time) ASC;
+    </select>
+
+</mapper>
